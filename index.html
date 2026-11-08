@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume – Mohamed Khalil</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+      50% { transform: translateY(-18px) rotate(180deg); opacity: 1; }
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 10px rgba(139,92,246,0.4), 0 0 20px rgba(139,92,246,0.2); }
+      50% { box-shadow: 0 0 25px rgba(139,92,246,0.8), 0 0 50px rgba(99,102,241,0.4); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fillBar {
+      from { width: 0%; }
+      to { width: var(--fill); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes counterPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0a0a1a;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient background */
+    .bg-mesh {
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139,92,246,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.15) 0%, transparent 60%),
+        #0a0a1a;
+      animation: gradientShift 8s ease infinite;
+      background-size: 400% 400%;
+      z-index: 0;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glassmorphism card */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+    }
+
+    .glass:hover {
+      border-color: rgba(139,92,246,0.4);
+      transition: border-color 0.3s ease;
+    }
+
+    /* Gradient text */
+    .grad-text {
+      background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .grad-text-2 {
+      background: linear-gradient(135deg, #f472b6, #a78bfa, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glowing accent bar */
+    .glow-bar {
+      background: linear-gradient(90deg, #8b5cf6, #6366f1, #06b6d4);
+      box-shadow: 0 0 15px rgba(139,92,246,0.7), 0 0 30px rgba(99,102,241,0.4);
+      animation: gradientShift 4s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    /* Skill pill */
+    .pill {
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.35);
+      color: #c4b5fd;
+      transition: all 0.25s ease;
+    }
+    .pill:hover {
+      background: rgba(139,92,246,0.3);
+      border-color: rgba(139,92,246,0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(139,92,246,0.3);
+    }
+
+    .pill-cyan {
+      background: rgba(6,182,212,0.12);
+      border: 1px solid rgba(6,182,212,0.3);
+      color: #67e8f9;
+    }
+    .pill-cyan:hover {
+      background: rgba(6,182,212,0.25);
+      border-color: rgba(6,182,212,0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(6,182,212,0.25);
+    }
+
+    .pill-green {
+      background: rgba(16,185,129,0.12);
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #6ee7b7;
+    }
+    .pill-green:hover {
+      background: rgba(16,185,129,0.25);
+      border-color: rgba(16,185,129,0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Cards */
+    .comp-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 14px;
+      transition: all 0.3s ease;
+    }
+    .comp-card:hover {
+      background: rgba(139,92,246,0.08);
+      border-color: rgba(139,92,246,0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(139,92,246,0.15);
+    }
+
+    /* Stat card */
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      animation: counterPulse 3s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      animation: none;
+      background: rgba(139,92,246,0.1);
+      border-color: rgba(139,92,246,0.4);
+      box-shadow: 0 0 25px rgba(139,92,246,0.25);
+      transform: translateY(-4px);
+    }
+
+    /* Glow pulse card */
+    .glow-card {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    /* Section heading */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .sec-icon {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: rgba(139,92,246,0.2);
+      border: 1px solid rgba(139,92,246,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .sec-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Language bar */
+    .lang-bar-track {
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .lang-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+      animation: fillBar 1.5s ease forwards;
+      box-shadow: 0 0 8px rgba(139,92,246,0.6);
+    }
+
+    /* Avatar ring */
+    .avatar-ring {
+      width: 72px; height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+      padding: 2px;
+      animation: pulseGlow 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      border-radius: 18px;
+      background: #12122a;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 900;
+      background: linear-gradient(135deg, #1e1b4b, #0c1a2e);
+      color: #a78bfa;
+    }
+
+    /* Availability badge */
+    .avail-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+      box-shadow: 0 0 8px #34d399;
+      animation: counterPulse 1.5s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    /* Print */
+    @media print {
+      body { background: white !important; }
+      .bg-mesh, .particle, .no-print { display: none !important; }
+      .glass { background: white !important; border: 1px solid #ddd !important; }
+    }
+
+    .anim-left { animation: slideInLeft 0.7s ease both; }
+    .anim-right { animation: slideInRight 0.7s ease 0.15s both; }
+    .anim-up { animation: fadeInUp 0.6s ease both; }
+    .anim-up-2 { animation: fadeInUp 0.6s ease 0.1s both; }
+    .anim-up-3 { animation: fadeInUp 0.6s ease 0.2s both; }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+
+  <!-- Floating particles -->
+  <div id="particles"></div>
+
+  <div class="content p-6 max-w-5xl mx-auto">
+
+
+
+    <!-- === HEADER === -->
+    <div class="glass anim-up mb-6 overflow-hidden" style="padding:32px;">
+      <div class="glow-bar" style="height:4px;border-radius:999px;margin-bottom:28px;"></div>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:20px;">
+        <!-- Left: avatar + name -->
+        <div style="display:flex;align-items:flex-start;gap:18px;" class="anim-left">
+          <div class="avatar-ring">
+            <div class="avatar-inner">M</div>
+          </div>
+          <div>
+            <h1 style="font-size:32px;font-weight:900;margin:0 0 4px;" class="grad-text">Mohamed Khalil</h1>
+            <div class="glow-bar" style="height:2px;width:80px;border-radius:999px;margin-bottom:8px;"></div>
+            <p style="font-size:14px;font-weight:600;color:#a78bfa;margin:0 0 6px;">
+              Customer Support · Technical Support · Community Manager
+            </p>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="avail-dot"></span>
+              <span style="font-size:12px;color:#34d399;font-weight:600;">Available for Remote Work</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: summary -->
+        <div class="anim-right" style="max-width:340px;">
+          <p style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;margin:0;">
+            Detail-oriented support professional with a strong technical edge — combining fast digital communication, Telegram community management, and real-world cybersecurity experience to deliver exceptional user experiences remotely.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- === MAIN GRID === -->
+    <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;" class="anim-up-2">
+
+      <!-- LEFT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- Core Competencies -->
+        <div class="glass" style="padding:24px;">
+          <div class="sec-head">
+            <div class="sec-icon">💬</div>
+            <span class="sec-title">Core Competencies</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">⚡</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Typing Speed</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">60+ WPM — precise, rapid written communication</p>
+            </div>
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">🤝</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Customer Communication</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Clear, professional & empathetic responses</p>
+            </div>
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">📱</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Telegram Management</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Groups, channels, bots & full platform ops</p>
+            </div>
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">🔧</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Issue Resolution</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Track requests, troubleshoot technical problems</p>
+            </div>
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">📊</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Reporting & Organization</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Structured info management & clear reports</p>
+            </div>
+            <div class="comp-card">
+              <div style="font-size:20px;margin-bottom:8px;">🖥️</div>
+              <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0 0 4px;">Digital Platform Fluency</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Adapts to any CRM, tool, or digital system fast</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Background -->
+        <div class="glass" style="padding:24px;">
+          <div class="sec-head">
+            <div class="sec-icon" style="background:rgba(6,182,212,0.15);border-color:rgba(6,182,212,0.35);">⚙️</div>
+            <span class="sec-title">Technical Background</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+
+            <div class="comp-card" style="border-left:3px solid #818cf8;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);color:#818cf8;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;">DEV</span>
+                <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0;">Application & System Development</p>
+              </div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">
+                Hands-on experience building applications and digital systems. Understands technical workflows from a developer's perspective — enabling faster root-cause analysis in support contexts.
+              </p>
+            </div>
+
+            <div class="comp-card glow-card" style="border-left:3px solid #34d399;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.4);color:#34d399;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;">SEC</span>
+                <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0;">Cybersecurity & Bug Bounty — HackerOne</p>
+              </div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">
+                Active contributor to global security programs on <strong style="color:#6ee7b7;">HackerOne</strong>. Identified and responsibly disclosed vulnerabilities in applications of major international companies — demonstrating deep analytical thinking, ethical responsibility, and technical precision.
+              </p>
+            </div>
+
+            <div class="comp-card" style="border-left:3px solid #60a5fa;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:rgba(96,165,250,0.2);border:1px solid rgba(96,165,250,0.4);color:#60a5fa;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;">ANALYSIS</span>
+                <p style="font-size:13px;font-weight:700;color:#e2e8f0;margin:0;">Problem Diagnosis & Technical Analysis</p>
+              </div>
+              <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">
+                Skilled at identifying root causes and proposing practical, user-friendly solutions. Acts as a bridge between end-users and technical teams with clarity and precision.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Why I Stand Out -->
+        <div class="glass" style="padding:24px;">
+          <div class="sec-head">
+            <div class="sec-icon" style="background:rgba(244,114,182,0.15);border-color:rgba(244,114,182,0.35);">🎯</div>
+            <span class="sec-title">Why I Stand Out</span>
+          </div>
+          <div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.15);border-radius:14px;padding:18px;">
+            <p style="font-size:13px;color:rgba(255,255,255,0.65);margin:0 0 10px;line-height:1.75;">
+              Most support agents handle tickets. I <em style="color:#a78bfa;">understand the systems behind them</em>. My development and security background lets me go far beyond scripted responses — I diagnose, explain, and escalate precisely.
+            </p>
+            <p style="font-size:13px;color:rgba(255,255,255,0.65);margin:0;line-height:1.75;">
+              I thrive in async, remote-first environments, work independently with zero supervision needed, and treat every user interaction as an opportunity to build lasting trust.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- Stats -->
+        <div class="glass" style="padding:20px;">
+          <div class="sec-head">
+            <div class="sec-icon">📊</div>
+            <span class="sec-title">At a Glance</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="stat-card">
+              <div style="font-size:28px;font-weight:900;" class="grad-text">60+</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;">Words Per Minute</div>
+            </div>
+            <div class="stat-card">
+              <div style="font-size:24px;font-weight:900;" class="grad-text-2">🛡️ H1</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;">HackerOne Contributor</div>
+            </div>
+            <div class="stat-card">
+              <div style="font-size:22px;font-weight:900;color:#34d399;">24/7</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;">Remote Availability</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Soft Skills -->
+        <div class="glass" style="padding:20px;">
+          <div class="sec-head">
+            <div class="sec-icon">🌟</div>
+            <span class="sec-title">Soft Skills</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;" id="softSkills"></div>
+        </div>
+
+        <!-- Languages -->
+        <div class="glass" style="padding:20px;">
+          <div class="sec-head">
+            <div class="sec-icon">🌐</div>
+            <span class="sec-title">Languages</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span style="font-size:12px;font-weight:700;color:#e2e8f0;">Arabic</span>
+                <span style="font-size:11px;color:#a78bfa;">Native</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill" style="--fill:100%;"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                <span style="font-size:12px;font-weight:700;color:#e2e8f0;">English</span>
+                <span style="font-size:11px;color:#67e8f9;">Proficient</span>
+              </div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill" style="--fill:72%;background:linear-gradient(90deg,#6366f1,#06b6d4);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="glass" style="padding:20px;">
+          <div class="sec-head">
+            <div class="sec-icon">🛠️</div>
+            <span class="sec-title">Tools & Platforms</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span class="pill" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Telegram</span>
+            <span class="pill-cyan" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">HackerOne</span>
+            <span class="pill" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">GitHub</span>
+            <span class="pill-cyan" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Bug Bounty</span>
+            <span class="pill-green" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Web Apps</span>
+            <span class="pill" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Digital CRMs</span>
+            <span class="pill-green" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Security Analysis</span>
+            <span class="pill-cyan" style="font-size:11px;padding:4px 11px;border-radius:999px;font-weight:600;">Remote Tools</span>
+          </div>
+        </div>
+
+        <!-- Target Roles -->
+        <div class="glass" style="padding:20px;">
+          <div class="sec-head">
+            <div class="sec-icon" style="background:rgba(244,114,182,0.15);border-color:rgba(244,114,182,0.35);">🎯</div>
+            <span class="sec-title">Target Roles</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:7px;" id="roles"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="margin-top:20px;text-align:center;padding:16px;" class="anim-up-3">
+      <div class="glow-bar" style="height:1px;border-radius:999px;margin-bottom:14px;"></div>
+      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">
+        Open to freelance, contract, and full-time remote opportunities worldwide
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    // Soft Skills
+    const softSkills = [
+      ["⏰", "Punctuality & Accountability"],
+      ["🧩", "Independent Remote Worker"],
+      ["⚡", "Fast Responsive Communication"],
+      ["🗂️", "Task Organization"],
+      ["💪", "Performance Under Pressure"],
+      ["🔍", "Attention to Detail"],
+      ["📈", "Fast Learner & Self-Starter"],
+    ];
+    const ssContainer = document.getElementById('softSkills');
+    softSkills.forEach(([icon, label]) => {
+      const d = document.createElement('div');
+      d.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.6);';
+      d.innerHTML = `<span style="font-size:14px;">${icon}</span><span>${label}</span>`;
+      ssContainer.appendChild(d);
+    });
+
+    // Target Roles
+    const roles = [
+      "Customer Support Specialist",
+      "Technical Support Agent",
+      "Community Manager (Remote)",
+      "Digital Operations Assistant",
+      "Remote Support Representative",
+    ];
+    const rContainer = document.getElementById('roles');
+    roles.forEach(r => {
+      const d = document.createElement('div');
+      d.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,0.55);';
+      d.innerHTML = `<span style="color:#a78bfa;font-weight:700;">▸</span><span>${r}</span>`;
+      rContainer.appendChild(d);
+    });
+
+    // Floating Particles
+    const container = document.getElementById('particles');
+    const colors = ['rgba(139,92,246,', 'rgba(99,102,241,', 'rgba(6,182,212,', 'rgba(52,211,153,'];
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      const size = Math.random() * 6 + 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      p.className = 'particle';
+      p.style.cssText = `
+        width:${size}px;height:${size}px;
+        left:${Math.random()*100}vw;top:${Math.random()*100}vh;
+        background:${color}${Math.random()*0.5+0.3});
+        animation: float ${Math.random()*6+5}s ease-in-out ${Math.random()*4}s infinite;
+      `;
+      container.appendChild(p);
+    }
+
+    // Animate language bars on load
+    document.querySelectorAll('.lang-bar-fill').forEach(bar => {
+      bar.style.width = '0%';
+      setTimeout(() => { bar.style.transition = 'width 1.4s cubic-bezier(0.4,0,0.2,1)'; bar.style.width = bar.style.getPropertyValue('--fill') || getComputedStyle(bar).getPropertyValue('--fill'); }, 400);
+    });
+  </script>
+</body>
+</html>
